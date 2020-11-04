@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var ProceedConfirmButton: UIButton!
     @IBOutlet weak var CreditView: UIView!
     @IBOutlet weak var PayPalView: UIView!
+    @IBOutlet weak var CardNumberTextInput: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,8 @@ class ViewController: UIViewController {
         CreditButton.isEnabled = false
         PayPalButton.isEnabled = true
         CreditButton.alpha = 0.4
+        CardNumberTextInput.setLeftPaddingPoints(104
+        )
     }
     
     @IBAction func PayPalButtonPressed(_ sender: UIButton) {
@@ -48,6 +51,19 @@ class ViewController: UIViewController {
         PayPalButton.isEnabled = true
         CreditButton.alpha = 0.4
         PayPalButton.alpha = 1
+    }
+}
+
+extension UITextField {
+    func setLeftPaddingPoints(_ amount:CGFloat){
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
+        self.leftView = paddingView
+        self.leftViewMode = .always
+    }
+    func setRightPaddingPoints(_ amount:CGFloat) {
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
+        self.rightView = paddingView
+        self.rightViewMode = .always
     }
 }
 
