@@ -25,11 +25,18 @@ class ViewController: UIViewController {
         CreditButton.layer.cornerRadius = 10
         ProceedConfirmButton.layer.cornerRadius = 26
         PayPalView.isHidden = true
+        CreditButton.isEnabled = false
+        PayPalButton.isEnabled = true
+        CreditButton.alpha = 0.4
     }
     
     @IBAction func PayPalButtonPressed(_ sender: UIButton) {
         CreditView.isHidden = true
         PayPalView.isHidden = false
+        PayPalButton.isEnabled = false
+        CreditButton.isEnabled = true
+        PayPalButton.alpha = 0.4
+        CreditButton.alpha = 1
     }
     
     @IBAction func ProceedBtnPressed(_ sender: UIButton) {
@@ -37,6 +44,10 @@ class ViewController: UIViewController {
     @IBAction func CreidtButtonPressed(_ sender: UIButton) {
         CreditView.isHidden = false
         PayPalView.isHidden = true
+        CreditButton.isEnabled = false
+        PayPalButton.isEnabled = true
+        CreditButton.alpha = 0.4
+        PayPalButton.alpha = 1
     }
 }
 
