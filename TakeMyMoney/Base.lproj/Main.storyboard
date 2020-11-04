@@ -12,7 +12,7 @@
         <!--Payment Data-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TakeMyMoney" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="TakeMyMoney" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -313,10 +313,10 @@
             </objects>
             <point key="canvasLocation" x="367.28971962616822" y="-103.02375809935207"/>
         </scene>
-        <!--View Controller-->
+        <!--Secondary View Controller-->
         <scene sceneID="oKJ-dL-cJi">
             <objects>
-                <viewController id="FHG-2u-bFn" sceneMemberID="viewController">
+                <viewController id="FHG-2u-bFn" customClass="SecondaryViewController" customModule="TakeMyMoney" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C4Q-Sv-UVY">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -338,17 +338,23 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment information" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jcF-pq-ct5">
-                                <rect key="frame" x="30" y="346" width="133" height="20"/>
+                                <rect key="frame" x="30" y="325" width="133" height="20"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j72-HJ-ct1">
-                                <rect key="frame" x="368" y="341" width="30" height="30"/>
+                                <rect key="frame" x="368" y="320" width="30" height="30"/>
                                 <state key="normal" title="Edit"/>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use promo code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t1E-1N-iuW">
+                                <rect key="frame" x="30" y="451" width="106" height="20"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kjQ-5N-xPX">
-                                <rect key="frame" x="30" y="382" width="368" height="70"/>
+                                <rect key="frame" x="30" y="353" width="368" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Master Card ending  **98" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LsS-kc-IVo">
                                         <rect key="frame" x="73" y="36" width="163" height="20"/>
@@ -381,27 +387,44 @@
                                     <constraint firstItem="Ix5-SZ-CyH" firstAttribute="leading" secondItem="oB9-YD-Vcz" secondAttribute="trailing" constant="11" id="oVF-ve-a6F"/>
                                 </constraints>
                             </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="PROMO20-08" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vPK-6o-keh">
+                                <rect key="frame" x="30" y="483" width="368" height="52"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="52" id="gup-DH-JwA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="F8I-cz-YHa"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="j72-HJ-ct1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jcF-pq-ct5" secondAttribute="trailing" constant="8" symbolic="YES" id="2ic-ay-ifn"/>
+                            <constraint firstItem="t1E-1N-iuW" firstAttribute="leading" secondItem="kjQ-5N-xPX" secondAttribute="leading" id="5Ff-0y-0fO"/>
                             <constraint firstItem="hXn-t5-oyI" firstAttribute="top" secondItem="F8I-cz-YHa" secondAttribute="top" id="7eq-1c-5Cf"/>
                             <constraint firstItem="F8I-cz-YHa" firstAttribute="trailing" secondItem="j72-HJ-ct1" secondAttribute="trailing" constant="30" id="8oK-1P-1TA"/>
-                            <constraint firstItem="kjQ-5N-xPX" firstAttribute="top" secondItem="j72-HJ-ct1" secondAttribute="bottom" constant="11" id="Emw-qh-MNr"/>
+                            <constraint firstItem="F8I-cz-YHa" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="t1E-1N-iuW" secondAttribute="trailing" symbolic="YES" id="EbY-GG-6co"/>
+                            <constraint firstItem="kjQ-5N-xPX" firstAttribute="top" secondItem="j72-HJ-ct1" secondAttribute="bottom" constant="3" id="Emw-qh-MNr"/>
+                            <constraint firstItem="F8I-cz-YHa" firstAttribute="trailing" secondItem="vPK-6o-keh" secondAttribute="trailing" constant="30" id="F6H-pz-uy6"/>
                             <constraint firstItem="F8I-cz-YHa" firstAttribute="trailing" secondItem="kjQ-5N-xPX" secondAttribute="trailing" constant="30" id="Fdr-uf-UFt"/>
+                            <constraint firstItem="vPK-6o-keh" firstAttribute="leading" secondItem="F8I-cz-YHa" secondAttribute="leading" constant="30" id="Kph-WF-xR4"/>
                             <constraint firstItem="hXn-t5-oyI" firstAttribute="trailing" secondItem="F8I-cz-YHa" secondAttribute="trailing" id="Sy5-TE-VED"/>
+                            <constraint firstItem="t1E-1N-iuW" firstAttribute="top" secondItem="kjQ-5N-xPX" secondAttribute="bottom" constant="28" id="TZP-oB-dsV"/>
                             <constraint firstItem="kjQ-5N-xPX" firstAttribute="leading" secondItem="F8I-cz-YHa" secondAttribute="leading" constant="30" id="V2l-y2-meq"/>
-                            <constraint firstItem="jcF-pq-ct5" firstAttribute="top" secondItem="hXn-t5-oyI" secondAttribute="bottom" constant="45" id="a2U-dk-pV7"/>
-                            <constraint firstItem="j72-HJ-ct1" firstAttribute="top" secondItem="hXn-t5-oyI" secondAttribute="bottom" constant="40" id="mXX-mz-blP"/>
+                            <constraint firstItem="vPK-6o-keh" firstAttribute="top" secondItem="t1E-1N-iuW" secondAttribute="bottom" constant="12" id="ZU3-rB-kQq"/>
+                            <constraint firstItem="jcF-pq-ct5" firstAttribute="top" secondItem="hXn-t5-oyI" secondAttribute="bottom" constant="24" id="a2U-dk-pV7"/>
+                            <constraint firstItem="j72-HJ-ct1" firstAttribute="top" secondItem="hXn-t5-oyI" secondAttribute="bottom" constant="19" id="mXX-mz-blP"/>
                             <constraint firstItem="hXn-t5-oyI" firstAttribute="leading" secondItem="F8I-cz-YHa" secondAttribute="leading" id="spN-iB-liA"/>
                             <constraint firstItem="jcF-pq-ct5" firstAttribute="leading" secondItem="F8I-cz-YHa" secondAttribute="leading" constant="30" id="uRD-Vd-Zyw"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="PaymentInfoView" destination="kjQ-5N-xPX" id="YZT-su-Ycm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AUF-Zv-CWw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1053.5999999999999" y="-88.605697151424295"/>
+            <point key="canvasLocation" x="1052.8037383177571" y="-88.768898488120954"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Yum-fW-1CW">
