@@ -14,6 +14,7 @@ enum PaymentType {
 
 class SecondaryViewController: UIViewController {
     
+    //var paymentType = PaymentType.credit
     var paymentType = PaymentType.paypal
 
     @IBOutlet weak var CreditInfoView: UIView!

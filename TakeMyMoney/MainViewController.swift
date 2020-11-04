@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var CreditButton: UIButton!
     @IBOutlet var PayPalButton: UIButton!
@@ -15,10 +15,15 @@ class MainViewController: UIViewController {
     @IBOutlet weak var ProceedConfirmButton: UIButton!
     @IBOutlet weak var CreditView: UIView!
     @IBOutlet weak var PayPalView: UIView!
-    @IBOutlet weak var CardNumberTextInput: UITextField!
+    @IBOutlet weak var cardNumberTextInput: UITextField!
+    
+    var temp = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        cardNumberTextInput.delegate = self
+        
+       self.cardNumberTextInput.addTarget(self, action: #selector(didChangeText(textField:)), for: .editingChanged)
         
         PayPalButton.imageView?.contentMode = .scaleAspectFit
         PayPalButton.layer.cornerRadius = 10
@@ -29,10 +34,33 @@ class MainViewController: UIViewController {
         CreditButton.isEnabled = false
         PayPalButton.isEnabled = true
         CreditButton.alpha = 0.4
-        CardNumberTextInput.setLeftPaddingPoints(104
+        cardNumberTextInput.setLeftPaddingPoints(104
         )
     }
     
+    @objc func didChangeText(textField:UITextField) {
+        textField.text = self.modifyCreditCardString(creditCardString: textField.text!)
+    }
+    
+
+    func modifyCreditCardString(creditCardString : String) -> String {
+        let trimmedString = creditCardString.components(separatedBy: .whitespaces).joined()
+        let arrOfCharacters = Array(trimmedString)
+        var resultString = ""
+        
+        arrOfCharacters.enumerated().forEach { (index, character) in
+            if index % 4 == 0 && index > 0 {
+                resultString += " "
+            }
+            if index < 12 {
+                resultString += "*"
+            } else {
+                resultString.append(character)
+            }
+        }
+        return resultString
+    }
+
     @IBAction func PayPalButtonPressed(_ sender: UIButton) {
         CreditView.isHidden = true
         PayPalView.isHidden = false
@@ -51,6 +79,18 @@ class MainViewController: UIViewController {
         PayPalButton.isEnabled = true
         CreditButton.alpha = 0.4
         PayPalButton.alpha = 1
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let allowedCharacters = "+1234567890"
+        let allowedCharacterSet = CharacterSet(charactersIn: allowedCharacters)
+        let typedCharacterSet = CharacterSet(charactersIn: string)
+        
+        let MAX_LENGTH = 19
+        let updatedString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+
+        return allowedCharacterSet.isSuperset(of: typedCharacterSet) && updatedString.count <= MAX_LENGTH
+
     }
 }
 
