@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var CreditButton: UIButton!
     @IBOutlet var PayPalButton: UIButton!
     
+    @IBOutlet weak var ProceedConfirmButton: UIButton!
     @IBOutlet weak var CreditView: UIView!
     @IBOutlet weak var PayPalView: UIView!
     
@@ -22,7 +23,8 @@ class ViewController: UIViewController {
         PayPalButton.layer.cornerRadius = 10
         CreditButton.imageView?.contentMode = .scaleAspectFit
         CreditButton.layer.cornerRadius = 10
-        //PayPalView.isHidden = true
+        ProceedConfirmButton.layer.cornerRadius = 26
+        PayPalView.isHidden = true
     }
     
     @IBAction func PayPalButtonPressed(_ sender: UIButton) {
@@ -30,6 +32,8 @@ class ViewController: UIViewController {
         PayPalView.isHidden = false
     }
     
+    @IBAction func ProceedBtnPressed(_ sender: UIButton) {
+    }
     @IBAction func CreidtButtonPressed(_ sender: UIButton) {
         CreditView.isHidden = false
         PayPalView.isHidden = true
