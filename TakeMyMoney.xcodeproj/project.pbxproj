@@ -61,11 +61,11 @@
 				83E44E1B2551D6E300ECE13E /* AppDelegate.swift */,
 				83E44E1D2551D6E300ECE13E /* SceneDelegate.swift */,
 				83E44E1F2551D6E300ECE13E /* MainViewController.swift */,
+				83306BF125531B5300B30903 /* SecondaryViewController.swift */,
 				83E44E212551D6E300ECE13E /* Main.storyboard */,
 				83E44E242551D6E400ECE13E /* Assets.xcassets */,
 				83E44E262551D6E400ECE13E /* LaunchScreen.storyboard */,
 				83E44E292551D6E400ECE13E /* Info.plist */,
-				83306BF125531B5300B30903 /* SecondaryViewController.swift */,
 			);
 			path = TakeMyMoney;
 			sourceTree = "<group>";

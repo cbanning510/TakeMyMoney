@@ -343,16 +343,16 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j72-HJ-ct1">
-                                <rect key="frame" x="368" y="320" width="30" height="30"/>
-                                <state key="normal" title="Edit"/>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use promo code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t1E-1N-iuW">
                                 <rect key="frame" x="30" y="451" width="106" height="20"/>
                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j72-HJ-ct1">
+                                <rect key="frame" x="368" y="320" width="30" height="30"/>
+                                <state key="normal" title="Edit"/>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kjQ-5N-xPX">
                                 <rect key="frame" x="30" y="353" width="368" height="70"/>
                                 <subviews>
@@ -395,6 +395,20 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MSf-2U-irD">
+                                <rect key="frame" x="20" y="808" width="388" height="54"/>
+                                <color key="backgroundColor" red="0.34897786380000001" green="0.43384498360000001" blue="0.94122266769999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="54" id="NVH-XP-5QE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
+                                <state key="normal" title="Pay">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="ProceedBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="a0M-7b-LaO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="F8I-cz-YHa"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -408,17 +422,21 @@
                             <constraint firstItem="F8I-cz-YHa" firstAttribute="trailing" secondItem="vPK-6o-keh" secondAttribute="trailing" constant="30" id="F6H-pz-uy6"/>
                             <constraint firstItem="F8I-cz-YHa" firstAttribute="trailing" secondItem="kjQ-5N-xPX" secondAttribute="trailing" constant="30" id="Fdr-uf-UFt"/>
                             <constraint firstItem="vPK-6o-keh" firstAttribute="leading" secondItem="F8I-cz-YHa" secondAttribute="leading" constant="30" id="Kph-WF-xR4"/>
+                            <constraint firstItem="MSf-2U-irD" firstAttribute="leading" secondItem="F8I-cz-YHa" secondAttribute="leading" constant="20" id="O9B-DR-fb7"/>
                             <constraint firstItem="hXn-t5-oyI" firstAttribute="trailing" secondItem="F8I-cz-YHa" secondAttribute="trailing" id="Sy5-TE-VED"/>
                             <constraint firstItem="t1E-1N-iuW" firstAttribute="top" secondItem="kjQ-5N-xPX" secondAttribute="bottom" constant="28" id="TZP-oB-dsV"/>
                             <constraint firstItem="kjQ-5N-xPX" firstAttribute="leading" secondItem="F8I-cz-YHa" secondAttribute="leading" constant="30" id="V2l-y2-meq"/>
                             <constraint firstItem="vPK-6o-keh" firstAttribute="top" secondItem="t1E-1N-iuW" secondAttribute="bottom" constant="12" id="ZU3-rB-kQq"/>
                             <constraint firstItem="jcF-pq-ct5" firstAttribute="top" secondItem="hXn-t5-oyI" secondAttribute="bottom" constant="24" id="a2U-dk-pV7"/>
                             <constraint firstItem="j72-HJ-ct1" firstAttribute="top" secondItem="hXn-t5-oyI" secondAttribute="bottom" constant="19" id="mXX-mz-blP"/>
+                            <constraint firstItem="F8I-cz-YHa" firstAttribute="bottom" secondItem="MSf-2U-irD" secondAttribute="bottom" constant="30" id="n5O-J0-ON6"/>
+                            <constraint firstItem="F8I-cz-YHa" firstAttribute="trailing" secondItem="MSf-2U-irD" secondAttribute="trailing" constant="20" id="obG-sn-gvE"/>
                             <constraint firstItem="hXn-t5-oyI" firstAttribute="leading" secondItem="F8I-cz-YHa" secondAttribute="leading" id="spN-iB-liA"/>
                             <constraint firstItem="jcF-pq-ct5" firstAttribute="leading" secondItem="F8I-cz-YHa" secondAttribute="leading" constant="30" id="uRD-Vd-Zyw"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="PayButton" destination="MSf-2U-irD" id="Uht-di-n41"/>
                         <outlet property="PaymentInfoView" destination="kjQ-5N-xPX" id="YZT-su-Ycm"/>
                     </connections>
                 </viewController>
