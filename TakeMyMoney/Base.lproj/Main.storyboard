@@ -71,7 +71,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="CreidtButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8GK-rE-Iky"/>
+                                            <action selector="CreditButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IjD-BP-2ev"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -155,6 +155,9 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="cc-number"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="doneAccessory" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Valid until" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XvZ-8j-BTK">
                                                 <rect key="frame" x="14.000000000000004" y="103.33333333333337" width="61.333333333333343" height="19.333333333333329"/>
@@ -177,8 +180,11 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="52" id="5kZ-w0-stA"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="doneAccessory" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
                                                     </textField>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="***" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="grK-6y-Y4b">
                                                         <rect key="frame" x="178" y="0.0" width="164" height="52"/>
@@ -187,7 +193,10 @@
                                                             <constraint firstAttribute="height" constant="52" id="Vmf-wX-cfl"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="doneAccessory" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
                                                     </textField>
                                                 </subviews>
                                                 <constraints>
@@ -302,12 +311,14 @@
                     </view>
                     <navigationItem key="navigationItem" title="Payment Data" id="hiZ-ms-ZzS"/>
                     <connections>
-                        <outlet property="CardNumberTextInput" destination="3eI-nD-xHj" id="U31-JW-ADL"/>
+                        <outlet property="CVVTextField" destination="grK-6y-Y4b" id="YsD-2X-1s8"/>
                         <outlet property="CreditButton" destination="5FQ-Js-SZ2" id="ze8-i8-pG6"/>
                         <outlet property="CreditView" destination="F3u-p6-gQX" id="OOc-xF-goe"/>
                         <outlet property="PayPalButton" destination="HEa-lD-VhO" id="Vea-Mc-63D"/>
                         <outlet property="PayPalView" destination="vPG-Dg-J2U" id="2mF-cb-ZRl"/>
                         <outlet property="ProceedConfirmButton" destination="FV6-Ad-lTN" id="wBj-sL-dXh"/>
+                        <outlet property="cardNumberTextInput" destination="3eI-nD-xHj" id="n5K-UH-iGt"/>
+                        <outlet property="datePickerTextField" destination="ITW-rr-o2g" id="PJc-oQ-uuj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -497,22 +508,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AUF-Zv-CWw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1052" y="-89.505247376311857"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="10l-hw-yN4">
-            <objects>
-                <viewController id="KGb-3Q-koP" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="2EV-2q-xB9">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="ybd-XV-kfj"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="R09-O8-OdH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1846.376811594203" y="-74.330357142857139"/>
+            <point key="canvasLocation" x="1148" y="-103"/>
         </scene>
     </scenes>
     <resources>
