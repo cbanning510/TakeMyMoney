@@ -20,6 +20,9 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var CVVTextField: UITextField!
     @IBOutlet weak var cardholderNameTextField: UITextField!
     @IBOutlet weak var invalidCardNumberLabel: UILabel!
+    @IBOutlet weak var invalidDateLabel: UILabel!
+    @IBOutlet weak var invalidCVVLabel: UILabel!
+    @IBOutlet weak var invalidFullNameLabel: UILabel!
     
     var datePicker: UIDatePicker?
     
@@ -38,31 +41,34 @@ class MainViewController: UIViewController, UITextFieldDelegate {
                 case cardNumberTextInput:
                     invalidCardNumberLabel.isHidden = true
                     if cardNumberTextInput.text!.count < 19 {
-                        print("less than 19")
                         cardNumberTextInput.layer.borderWidth = 2.0
                         cardNumberTextInput.layer.borderColor = UIColor.red.cgColor
                         invalidCardNumberLabel.isHidden = false
                         result = false
                     }
                 case datePickerTextField:
+                    invalidDateLabel.isHidden = true
                     if datePickerTextField.text == "" {
-                        print("empty date field")
                         datePickerTextField.layer.borderWidth = 2.0
                         datePickerTextField.layer.borderColor = UIColor.red.cgColor
+                        invalidDateLabel.isHidden = false
                         result = false
                     }
             case CVVTextField:
+                invalidCVVLabel.isHidden = true
                 if CVVTextField.text!.count < 3 {
-                    print("invalid CVV field")
                     CVVTextField.layer.borderWidth = 2.0
                     CVVTextField.layer.borderColor = UIColor.red.cgColor
+                    invalidCVVLabel.isHidden = false
                     result = false
                 }
             case cardholderNameTextField:
-                if cardholderNameTextField.text == "" {
-                    print("empty cardholder")
+                invalidFullNameLabel.isHidden = true
+                let fullNameArray = cardholderNameTextField.text?.split(separator: " ")
+                if cardholderNameTextField.text == "" || fullNameArray!.count < 2 {
                     cardholderNameTextField.layer.borderWidth = 2.0
                     cardholderNameTextField.layer.borderColor = UIColor.red.cgColor
+                    invalidFullNameLabel.isHidden = false
                     result = false
                 }
             default:
@@ -88,10 +94,15 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     
     func configureUI() {
         invalidCardNumberLabel.isHidden = true
+        invalidDateLabel.isHidden = true
+        invalidCVVLabel.isHidden = true
+        invalidFullNameLabel.isHidden = true
         cardNumberTextInput.delegate = self
         CVVTextField.delegate = self
         cardholderNameTextField.delegate = self
         self.cardNumberTextInput.addTarget(self, action: #selector(didChangeText(textField:)), for: .editingChanged)
+        self.CVVTextField.addTarget(self, action: #selector(didChangeCVVText(textField:)), for: .editingChanged)
+        self.cardholderNameTextField.addTarget(self, action: #selector(didChangeCardHolderText(textField:)), for: .editingChanged)
         configureButtonUI()
         configureDatePicker()
         PayPalView.isHidden = true
@@ -119,11 +130,13 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func dateChanged(datePicker:UIDatePicker) {
+        let result = isFormFieldValid(textField: datePickerTextField)
+        if result {   
+            datePickerTextField.layer.borderWidth = 0
+        }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/yyyy"
         datePickerTextField.text = dateFormatter.string(from: datePicker.date)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped(gestureRecognizer:)))
-        view.addGestureRecognizer(tapGesture)
     }
     
     @objc func viewTapped(gestureRecognizer: UIGestureRecognizer) {
@@ -137,6 +150,20 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     @objc func didChangeText(textField:UITextField) {
         textField.text = self.modifyCreditCardString(creditCardString: textField.text!)
     }
+    
+    @objc func didChangeCVVText(textField:UITextField) {
+        let result = isFormFieldValid(textField: CVVTextField)
+        if result {
+            CVVTextField.layer.borderWidth = 0
+        }
+    }
+    
+    @objc func didChangeCardHolderText(textField:UITextField) {
+        let result = isFormFieldValid(textField: cardholderNameTextField)
+        if result {
+            cardholderNameTextField.layer.borderWidth = 0
+        }
+    }    
     
     func modifyCreditCardString(creditCardString : String) -> String {
         if isFormFieldValid(textField: cardNumberTextInput) {
@@ -185,7 +212,6 @@ class MainViewController: UIViewController, UITextFieldDelegate {
            moveTextField(textField, moveDistance: -170, up: true)
        }
 
-       // Finish Editing The Text Field
        func textFieldDidEndEditing(_ textField: UITextField) {
            moveTextField(textField, moveDistance: -170, up: false)
        }
@@ -196,7 +222,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
            return true
        }
 
-       // Move the text field in a pretty animation!
+
        func moveTextField(_ textField: UITextField, moveDistance: Int, up: Bool) {
            let moveDuration = 0.3
            let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
@@ -232,6 +258,12 @@ class MainViewController: UIViewController, UITextFieldDelegate {
             return allowedCharacterSet.isSuperset(of: typedCharacterSet) && updatedString.count <= MAX_LENGTH
         }
        
+    }
+}
+
+extension String {
+    var wordList: [String] {
+        return components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty }
     }
 }
 
