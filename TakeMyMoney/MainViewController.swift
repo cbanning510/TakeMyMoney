@@ -10,6 +10,12 @@ import WebKit
 
 class MainViewController: UIViewController, UITextFieldDelegate {
     
+    func isValid(YourEMailAddress: String) -> Bool {
+        let REGEX: String
+        REGEX = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
+        return NSPredicate(format: "SELF MATCHES %@", REGEX).evaluate(with: YourEMailAddress)
+    }
+    
     @IBOutlet weak var CreditButton: UIButton!
     @IBOutlet var PayPalButton: UIButton!
     @IBOutlet weak var ProceedConfirmButton: UIButton!
@@ -23,6 +29,10 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var invalidDateLabel: UILabel!
     @IBOutlet weak var invalidCVVLabel: UILabel!
     @IBOutlet weak var invalidFullNameLabel: UILabel!
+    @IBOutlet weak var invalidPaypalPasswordLabel: UILabel!
+    @IBOutlet weak var invalidPayPalEmailLebel: UILabel!
+    @IBOutlet weak var PaypalUserNameTextField: UITextField!
+    @IBOutlet weak var PaypalPasswordTextField: UITextField!
     
     var datePicker: UIDatePicker?
     
@@ -34,26 +44,54 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         configureUI()
     }
     
-    func isFormFieldValid(textField: UITextField) -> Bool {
+    func isPaypalFormValid(textField: UITextField) -> Bool {
         var result = true
-        if CreditButton.isSelected {
-            switch textField {
-                case cardNumberTextInput:
-                    invalidCardNumberLabel.isHidden = true
-                    if cardNumberTextInput.text!.count < 19 {
-                        cardNumberTextInput.layer.borderWidth = 2.0
-                        cardNumberTextInput.layer.borderColor = UIColor.red.cgColor
-                        invalidCardNumberLabel.isHidden = false
-                        result = false
-                    }
-                case datePickerTextField:
-                    invalidDateLabel.isHidden = true
-                    if datePickerTextField.text == "" {
-                        datePickerTextField.layer.borderWidth = 2.0
-                        datePickerTextField.layer.borderColor = UIColor.red.cgColor
-                        invalidDateLabel.isHidden = false
-                        result = false
-                    }
+        switch textField {
+            case PaypalUserNameTextField:
+                print("PaypalUserNameTextField")
+                invalidPayPalEmailLebel.isHidden = true
+                print(isValid(YourEMailAddress: PaypalUserNameTextField.text!))
+                if !isValid(YourEMailAddress: PaypalUserNameTextField.text!) {
+                    print("not valid!!!")
+                    PaypalUserNameTextField.layer.borderWidth = 2.0
+                    PaypalUserNameTextField.layer.borderColor = UIColor.red.cgColor
+                    invalidPayPalEmailLebel.isHidden = false
+                    result = false
+                }
+            case PaypalPasswordTextField:
+                print("PaypalPasswordTextField")
+                invalidPaypalPasswordLabel.isHidden = true
+                if PaypalPasswordTextField.text == "" {
+                    PaypalPasswordTextField.layer.borderWidth = 2.0
+                    PaypalPasswordTextField.layer.borderColor = UIColor.red.cgColor
+                    invalidPaypalPasswordLabel.isHidden = false
+                    result = false
+                }
+            default:
+                print("default")
+        }
+        return result
+    }
+    
+    func isCreditFormFieldValid(textField: UITextField) -> Bool {
+        var result = true
+        switch textField {
+            case cardNumberTextInput:
+                invalidCardNumberLabel.isHidden = true
+                if cardNumberTextInput.text!.count < 19 {
+                    cardNumberTextInput.layer.borderWidth = 2.0
+                    cardNumberTextInput.layer.borderColor = UIColor.red.cgColor
+                    invalidCardNumberLabel.isHidden = false
+                    result = false
+                }
+            case datePickerTextField:
+                invalidDateLabel.isHidden = true
+                if datePickerTextField.text == "" {
+                    datePickerTextField.layer.borderWidth = 2.0
+                    datePickerTextField.layer.borderColor = UIColor.red.cgColor
+                    invalidDateLabel.isHidden = false
+                    result = false
+                }
             case CVVTextField:
                 invalidCVVLabel.isHidden = true
                 if CVVTextField.text!.count < 3 {
@@ -73,23 +111,26 @@ class MainViewController: UIViewController, UITextFieldDelegate {
                 }
             default:
                 print("default")
-            }
-        } else {
-            // handle PayPal error checking here
         }
-        
         return result
     }
     
     @IBAction func ProceedBtnPressed(_ sender: UIButton) {
-        let arrayOfTextFields = [cardNumberTextInput, datePickerTextField, CVVTextField, cardholderNameTextField]
         var result = false
-        for textField in arrayOfTextFields {
-            result = isFormFieldValid(textField: textField!)
+        if CreditButton.isSelected {
+            let arrayOfCreditTextFields = [cardNumberTextInput, datePickerTextField, CVVTextField, cardholderNameTextField]
+            for textField in arrayOfCreditTextFields {
+                result = isCreditFormFieldValid(textField: textField!)
+            }
+        } else {
+            let arrayOfPaypalTextFields = [PaypalUserNameTextField, PaypalPasswordTextField]
+            for textField in arrayOfPaypalTextFields {
+                result = isPaypalFormValid(textField: textField!)
+            }
         }
         if result == true {
             performSegue(withIdentifier: "PaymentScreenSegue", sender: nil)
-        }        
+        }
     }
     
     func configureUI() {
@@ -97,19 +138,25 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         invalidDateLabel.isHidden = true
         invalidCVVLabel.isHidden = true
         invalidFullNameLabel.isHidden = true
+        invalidPayPalEmailLebel.isHidden = true
+        invalidPaypalPasswordLabel.isHidden = true
         cardNumberTextInput.delegate = self
         CVVTextField.delegate = self
         cardholderNameTextField.delegate = self
+        PaypalUserNameTextField.delegate = self
+        PaypalPasswordTextField.delegate = self
         self.cardNumberTextInput.addTarget(self, action: #selector(didChangeText(textField:)), for: .editingChanged)
         self.CVVTextField.addTarget(self, action: #selector(didChangeCVVText(textField:)), for: .editingChanged)
         self.cardholderNameTextField.addTarget(self, action: #selector(didChangeCardHolderText(textField:)), for: .editingChanged)
+        self.PaypalUserNameTextField.addTarget(self, action: #selector(didChangePayPalUserName(textField:)), for: .editingChanged)
+        self.PaypalPasswordTextField.addTarget(self, action: #selector(didChangePayPalPassword(textField:)), for: .editingChanged)
         configureButtonUI()
         configureDatePicker()
         PayPalView.isHidden = true
-        CreditButton.isSelected = true
-        CreditButton.isEnabled = false
-        PayPalButton.isEnabled = true
-        CreditButton.alpha = 0.4
+        CreditButtonPressed(CreditButton)
+        //CreditButton.isEnabled = false
+        //PayPalButton.isEnabled = true
+        //CreditButton.alpha = 0.4
         cardNumberTextInput.setLeftPaddingPoints(104)
     }
     
@@ -130,7 +177,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func dateChanged(datePicker:UIDatePicker) {
-        let result = isFormFieldValid(textField: datePickerTextField)
+        let result = isCreditFormFieldValid(textField: datePickerTextField)
         if result {   
             datePickerTextField.layer.borderWidth = 0
         }
@@ -152,21 +199,35 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func didChangeCVVText(textField:UITextField) {
-        let result = isFormFieldValid(textField: CVVTextField)
+        let result = isCreditFormFieldValid(textField: CVVTextField)
         if result {
             CVVTextField.layer.borderWidth = 0
         }
     }
     
     @objc func didChangeCardHolderText(textField:UITextField) {
-        let result = isFormFieldValid(textField: cardholderNameTextField)
+        let result = isCreditFormFieldValid(textField: PaypalUserNameTextField)
         if result {
-            cardholderNameTextField.layer.borderWidth = 0
+            PaypalUserNameTextField.layer.borderWidth = 0
         }
-    }    
+    }
+    
+    @objc func didChangePayPalUserName(textField:UITextField) {
+        let result = isPaypalFormValid(textField: PaypalUserNameTextField)
+        if result {
+            PaypalUserNameTextField.layer.borderWidth = 0
+        }
+    }
+    
+    @objc func didChangePayPalPassword(textField:UITextField) {
+        let result = isPaypalFormValid(textField: PaypalPasswordTextField)
+        if result {
+            PaypalPasswordTextField.layer.borderWidth = 0
+        }
+    }
     
     func modifyCreditCardString(creditCardString : String) -> String {
-        if isFormFieldValid(textField: cardNumberTextInput) {
+        if isCreditFormFieldValid(textField: cardNumberTextInput) {
             cardNumberTextInput.layer.borderWidth = 0
         }
         let trimmedString = creditCardString.components(separatedBy: .whitespaces).joined()
@@ -189,8 +250,8 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     @IBAction func PayPalButtonPressed(_ sender: UIButton) {
         CreditView.isHidden = true
         PayPalView.isHidden = false
-        CreditButton.isSelected = false
         PayPalButton.isSelected = true
+        CreditButton.isSelected = false
         PayPalButton.isEnabled = false
         CreditButton.isEnabled = true
         PayPalButton.alpha = 0.4
@@ -236,28 +297,35 @@ class MainViewController: UIViewController, UITextFieldDelegate {
 
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        if textField == cardholderNameTextField {
-            let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
-            let Regex = "[a-z A-Z ]+"
-                let predicate = NSPredicate.init(format: "SELF MATCHES %@", Regex)
-                if predicate.evaluate(with: text) || string == ""
-                {
-                    return true
-                }
-                else
-                {
-                    return false
-                }
-        } else {
+        var result = true
+        switch textField {
+            case cardholderNameTextField:
+                let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+                let Regex = "[a-z A-Z ]+"
+                    let predicate = NSPredicate.init(format: "SELF MATCHES %@", Regex)
+                    if predicate.evaluate(with: text) || string == ""
+                    {
+                        result = true
+                    }
+                    else
+                    {
+                        result = false
+                    }
+        case PaypalUserNameTextField, PaypalPasswordTextField:
+            let updatedString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+            let maxLength = 35
+            result = updatedString.count <= maxLength
+        case cardholderNameTextField, CVVTextField:
             let allowedCharacters = "+1234567890"
             let allowedCharacterSet = CharacterSet(charactersIn: allowedCharacters)
             let typedCharacterSet = CharacterSet(charactersIn: string)
             let MAX_LENGTH = textField == cardNumberTextInput ? 19 : 3
             let updatedString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
-            return allowedCharacterSet.isSuperset(of: typedCharacterSet) && updatedString.count <= MAX_LENGTH
+            result = allowedCharacterSet.isSuperset(of: typedCharacterSet) && updatedString.count <= MAX_LENGTH
+        default:
+            print("default case")
         }
-       
+        return result
     }
 }
 
