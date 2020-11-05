@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WebKit
 
 class MainViewController: UIViewController, UITextFieldDelegate {
     
@@ -17,23 +18,84 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var cardNumberTextInput: UITextField!
     @IBOutlet weak var datePickerTextField: UITextField!
     @IBOutlet weak var CVVTextField: UITextField!
+    @IBOutlet weak var cardholderNameTextField: UITextField!
+    @IBOutlet weak var invalidCardNumberLabel: UILabel!
     
     var datePicker: UIDatePicker?
     
     var temp = ""
+    var isFormError = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
     
+    func isFormFieldValid(textField: UITextField) -> Bool {
+        var result = true
+        if CreditButton.isSelected {
+            switch textField {
+                case cardNumberTextInput:
+                    invalidCardNumberLabel.isHidden = true
+                    if cardNumberTextInput.text!.count < 19 {
+                        print("less than 19")
+                        cardNumberTextInput.layer.borderWidth = 2.0
+                        cardNumberTextInput.layer.borderColor = UIColor.red.cgColor
+                        invalidCardNumberLabel.isHidden = false
+                        result = false
+                    }
+                case datePickerTextField:
+                    if datePickerTextField.text == "" {
+                        print("empty date field")
+                        datePickerTextField.layer.borderWidth = 2.0
+                        datePickerTextField.layer.borderColor = UIColor.red.cgColor
+                        result = false
+                    }
+            case CVVTextField:
+                if CVVTextField.text!.count < 3 {
+                    print("invalid CVV field")
+                    CVVTextField.layer.borderWidth = 2.0
+                    CVVTextField.layer.borderColor = UIColor.red.cgColor
+                    result = false
+                }
+            case cardholderNameTextField:
+                if cardholderNameTextField.text == "" {
+                    print("empty cardholder")
+                    cardholderNameTextField.layer.borderWidth = 2.0
+                    cardholderNameTextField.layer.borderColor = UIColor.red.cgColor
+                    result = false
+                }
+            default:
+                print("default")
+            }
+        } else {
+            // handle PayPal error checking here
+        }
+        
+        return result
+    }
+    
+    @IBAction func ProceedBtnPressed(_ sender: UIButton) {
+        let arrayOfTextFields = [cardNumberTextInput, datePickerTextField, CVVTextField, cardholderNameTextField]
+        var result = false
+        for textField in arrayOfTextFields {
+            result = isFormFieldValid(textField: textField!)
+        }
+        if result == true {
+            performSegue(withIdentifier: "PaymentScreenSegue", sender: nil)
+        }        
+    }
+    
     func configureUI() {
+        invalidCardNumberLabel.isHidden = true
         cardNumberTextInput.delegate = self
         CVVTextField.delegate = self
+        cardholderNameTextField.delegate = self
         self.cardNumberTextInput.addTarget(self, action: #selector(didChangeText(textField:)), for: .editingChanged)
         configureButtonUI()
         configureDatePicker()
         PayPalView.isHidden = true
+        CreditButton.isSelected = true
         CreditButton.isEnabled = false
         PayPalButton.isEnabled = true
         CreditButton.alpha = 0.4
@@ -77,6 +139,9 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     }
     
     func modifyCreditCardString(creditCardString : String) -> String {
+        if isFormFieldValid(textField: cardNumberTextInput) {
+            cardNumberTextInput.layer.borderWidth = 0
+        }
         let trimmedString = creditCardString.components(separatedBy: .whitespaces).joined()
         let arrOfCharacters = Array(trimmedString)
         var resultString = ""
@@ -97,32 +162,76 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     @IBAction func PayPalButtonPressed(_ sender: UIButton) {
         CreditView.isHidden = true
         PayPalView.isHidden = false
+        CreditButton.isSelected = false
+        PayPalButton.isSelected = true
         PayPalButton.isEnabled = false
         CreditButton.isEnabled = true
         PayPalButton.alpha = 0.4
         CreditButton.alpha = 1
     }
     
-    @IBAction func ProceedBtnPressed(_ sender: UIButton) {
-        print("proceeding to confirm page!")
-    }
-    
     @IBAction func CreditButtonPressed(_ sender: UIButton) {
         CreditView.isHidden = false
         PayPalView.isHidden = true
+        CreditButton.isSelected = true
+        PayPalButton.isSelected = false
         CreditButton.isEnabled = false
         PayPalButton.isEnabled = true
         CreditButton.alpha = 0.4
         PayPalButton.alpha = 1
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+           moveTextField(textField, moveDistance: -170, up: true)
+       }
+
+       // Finish Editing The Text Field
+       func textFieldDidEndEditing(_ textField: UITextField) {
+           moveTextField(textField, moveDistance: -170, up: false)
+       }
+
+       // Hide the keyboard when the return key pressed
+       func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+           textField.resignFirstResponder()
+           return true
+       }
+
+       // Move the text field in a pretty animation!
+       func moveTextField(_ textField: UITextField, moveDistance: Int, up: Bool) {
+           let moveDuration = 0.3
+           let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
+
+           UIView.beginAnimations("cardholderNameTextField", context: nil)
+           UIView.setAnimationBeginsFromCurrentState(true)
+           UIView.setAnimationDuration(moveDuration)
+           self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+           UIView.commitAnimations()
+       }
+
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let allowedCharacters = "+1234567890"
-        let allowedCharacterSet = CharacterSet(charactersIn: allowedCharacters)
-        let typedCharacterSet = CharacterSet(charactersIn: string)
-        let MAX_LENGTH = textField == cardNumberTextInput ? 19 : 3
-        let updatedString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
-        return allowedCharacterSet.isSuperset(of: typedCharacterSet) && updatedString.count <= MAX_LENGTH
+        
+        if textField == cardholderNameTextField {
+            let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+            let Regex = "[a-z A-Z ]+"
+                let predicate = NSPredicate.init(format: "SELF MATCHES %@", Regex)
+                if predicate.evaluate(with: text) || string == ""
+                {
+                    return true
+                }
+                else
+                {
+                    return false
+                }
+        } else {
+            let allowedCharacters = "+1234567890"
+            let allowedCharacterSet = CharacterSet(charactersIn: allowedCharacters)
+            let typedCharacterSet = CharacterSet(charactersIn: string)
+            let MAX_LENGTH = textField == cardNumberTextInput ? 19 : 3
+            let updatedString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+            return allowedCharacterSet.isSuperset(of: typedCharacterSet) && updatedString.count <= MAX_LENGTH
+        }
+       
     }
 }
 

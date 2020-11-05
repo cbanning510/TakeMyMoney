@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -76,8 +75,8 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="QqT-8J-22o">
-                                <rect key="frame" x="20" y="273.66666666666674" width="374" height="673"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="QqT-8J-22o">
+                                <rect key="frame" x="20" y="273.66666666666674" width="374" height="623"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vPG-Dg-J2U">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="222"/>
@@ -98,7 +97,7 @@
                                                     <constraint firstAttribute="height" constant="52" id="aLC-Hp-FXr"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                             </textField>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="paypal-logo" translatesAutoresizingMaskIntoConstraints="NO" id="sLK-XI-yAY">
                                                 <rect key="frame" x="-149" y="20" width="672" height="67"/>
@@ -139,7 +138,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F3u-p6-gQX" userLabel="Credit View">
-                                        <rect key="frame" x="0.0" y="321.99999999999994" width="374" height="351.00000000000006"/>
+                                        <rect key="frame" x="0.0" y="271.99999999999994" width="374" height="351.00000000000006"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tlh-a7-8Tg">
                                                 <rect key="frame" x="14" y="7.9999999999999982" width="85.666666666666671" height="19.333333333333329"/>
@@ -217,6 +216,9 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="doneAccessory" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                             </textField>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="Mk9-a9-0Wf">
                                                 <rect key="frame" x="40" y="294" width="294" height="31"/>
@@ -236,12 +238,19 @@
                                                 <rect key="frame" x="33" y="39" width="46" height="42"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invalid card number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hEs-o9-8FA">
+                                                <rect key="frame" x="141" y="7.9999999999999982" width="130" height="19.333333333333329"/>
+                                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="14"/>
+                                                <color key="textColor" red="0.93290621039999999" green="0.069613002239999999" blue="0.1085574403" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="3eI-nD-xHj" secondAttribute="trailing" constant="14" id="39O-MA-msW"/>
                                             <constraint firstItem="3eI-nD-xHj" firstAttribute="leading" secondItem="F3u-p6-gQX" secondAttribute="leading" constant="14" id="9za-lF-DQ1"/>
                                             <constraint firstItem="XvZ-8j-BTK" firstAttribute="top" secondItem="3eI-nD-xHj" secondAttribute="bottom" constant="18" id="BR9-f7-gtZ"/>
+                                            <constraint firstItem="hEs-o9-8FA" firstAttribute="leading" secondItem="tlh-a7-8Tg" secondAttribute="trailing" constant="41.333333333333329" id="BUl-71-cMr"/>
                                             <constraint firstItem="XvZ-8j-BTK" firstAttribute="top" secondItem="3eI-nD-xHj" secondAttribute="bottom" constant="18" id="CM6-gP-cyX"/>
                                             <constraint firstItem="OZN-q9-RO6" firstAttribute="top" secondItem="3eI-nD-xHj" secondAttribute="bottom" constant="18" id="Da6-V7-9Hz"/>
                                             <constraint firstItem="Mk9-a9-0Wf" firstAttribute="top" secondItem="PGG-xe-BZK" secondAttribute="bottom" constant="18" id="F6E-8U-hqU"/>
@@ -255,16 +264,19 @@
                                             <constraint firstItem="EZZ-0O-RQu" firstAttribute="leading" secondItem="F3u-p6-gQX" secondAttribute="leading" constant="14" id="TmL-2U-95h"/>
                                             <constraint firstAttribute="trailing" secondItem="Ts2-GC-sd7" secondAttribute="trailing" constant="16" id="TuE-iG-li5"/>
                                             <constraint firstItem="EZZ-0O-RQu" firstAttribute="top" secondItem="Ts2-GC-sd7" secondAttribute="bottom" constant="18" id="TxV-c9-WVX"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hEs-o9-8FA" secondAttribute="trailing" constant="20" symbolic="YES" id="VEZ-IA-HYM"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tlh-a7-8Tg" secondAttribute="trailing" constant="20" symbolic="YES" id="a9z-aR-DYc"/>
                                             <constraint firstItem="PGG-xe-BZK" firstAttribute="leading" secondItem="F3u-p6-gQX" secondAttribute="leading" constant="14" id="b1G-yQ-A3O"/>
                                             <constraint firstItem="Ts2-GC-sd7" firstAttribute="top" secondItem="OZN-q9-RO6" secondAttribute="bottom" constant="2.5" id="dk4-vh-kQs"/>
                                             <constraint firstItem="Ts2-GC-sd7" firstAttribute="top" secondItem="XvZ-8j-BTK" secondAttribute="bottom" constant="6" id="fpY-2w-dCJ"/>
                                             <constraint firstItem="tlh-a7-8Tg" firstAttribute="leading" secondItem="F3u-p6-gQX" secondAttribute="leading" constant="14" id="lM1-a0-OhL"/>
+                                            <constraint firstItem="3eI-nD-xHj" firstAttribute="top" secondItem="hEs-o9-8FA" secondAttribute="bottom" constant="6" id="m1d-ae-niq"/>
                                             <constraint firstAttribute="height" constant="351" id="n8t-DA-vCt"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="EZZ-0O-RQu" secondAttribute="trailing" constant="20" symbolic="YES" id="oQp-an-bzh"/>
                                             <constraint firstItem="PGG-xe-BZK" firstAttribute="top" secondItem="EZZ-0O-RQu" secondAttribute="bottom" constant="6" id="oWo-FK-dbW"/>
                                             <constraint firstItem="OZN-q9-RO6" firstAttribute="leading" secondItem="grK-6y-Y4b" secondAttribute="leading" id="txn-jP-rai"/>
                                             <constraint firstAttribute="trailing" secondItem="PGG-xe-BZK" secondAttribute="trailing" constant="14" id="vSM-K5-kOV"/>
+                                            <constraint firstItem="hEs-o9-8FA" firstAttribute="top" secondItem="F3u-p6-gQX" secondAttribute="top" constant="8" id="wJs-bA-3tY"/>
                                             <constraint firstItem="Ts2-GC-sd7" firstAttribute="top" secondItem="XvZ-8j-BTK" secondAttribute="bottom" constant="6" id="yUP-4v-5BT"/>
                                             <constraint firstItem="XvZ-8j-BTK" firstAttribute="leading" secondItem="F3u-p6-gQX" secondAttribute="leading" constant="14" id="zyu-KI-2dM"/>
                                         </constraints>
@@ -283,7 +295,6 @@
                                 </state>
                                 <connections>
                                     <action selector="ProceedBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AfD-fD-9Ge"/>
-                                    <segue destination="FHG-2u-bFn" kind="presentation" modalPresentationStyle="fullScreen" id="tqa-f4-52m"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -318,7 +329,10 @@
                         <outlet property="PayPalView" destination="vPG-Dg-J2U" id="2mF-cb-ZRl"/>
                         <outlet property="ProceedConfirmButton" destination="FV6-Ad-lTN" id="wBj-sL-dXh"/>
                         <outlet property="cardNumberTextInput" destination="3eI-nD-xHj" id="n5K-UH-iGt"/>
+                        <outlet property="cardholderNameTextField" destination="PGG-xe-BZK" id="NeZ-ci-Cko"/>
                         <outlet property="datePickerTextField" destination="ITW-rr-o2g" id="PJc-oQ-uuj"/>
+                        <outlet property="invalidCardNumberLabel" destination="hEs-o9-8FA" id="C71-oO-VPV"/>
+                        <segue destination="FHG-2u-bFn" kind="show" identifier="PaymentScreenSegue" id="eQN-3J-Vec"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -330,11 +344,11 @@
             <objects>
                 <viewController id="FHG-2u-bFn" customClass="SecondaryViewController" customModule="TakeMyMoney" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C4Q-Sv-UVY">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hXn-t5-oyI" userLabel="CouponView">
-                                <rect key="frame" x="0.0" y="44" width="414" height="257"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="257"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="promocodeNikePic" translatesAutoresizingMaskIntoConstraints="NO" id="g2f-gQ-5Sk">
                                         <rect key="frame" x="20" y="18" width="367" height="220"/>
@@ -350,7 +364,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MSf-2U-irD">
-                                <rect key="frame" x="20" y="778" width="374" height="54"/>
+                                <rect key="frame" x="20" y="724" width="374" height="54"/>
                                 <color key="backgroundColor" red="0.34897786380000001" green="0.43384498360000001" blue="0.94122266769999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="54" id="NVH-XP-5QE"/>
@@ -365,7 +379,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QBG-eD-Bsf" userLabel="Credit View">
-                                <rect key="frame" x="11" y="309" width="392" height="453"/>
+                                <rect key="frame" x="11" y="265" width="392" height="443"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment information" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jcF-pq-ct5">
                                         <rect key="frame" x="20" y="12.999999999999998" width="132.33333333333334" height="19.333333333333329"/>
@@ -378,7 +392,7 @@
                                         <state key="normal" title="Edit"/>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="PROMO20-08" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vPK-6o-keh">
-                                        <rect key="frame" x="19" y="239.33333333333337" width="352" height="52"/>
+                                        <rect key="frame" x="19" y="239.33333333333331" width="352" height="52"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="52" id="spe-cg-ouc"/>
                                         </constraints>
@@ -500,6 +514,7 @@
                             <constraint firstItem="hXn-t5-oyI" firstAttribute="leading" secondItem="F8I-cz-YHa" secondAttribute="leading" id="spN-iB-liA"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="mWL-bJ-il5"/>
                     <connections>
                         <outlet property="CreditInfoView" destination="TWv-M9-6ct" id="ZnM-zZ-M2w"/>
                         <outlet property="PayButton" destination="MSf-2U-irD" id="Uht-di-n41"/>
