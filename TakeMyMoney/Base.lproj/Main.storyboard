@@ -453,6 +453,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j72-HJ-ct1">
                                         <rect key="frame" x="342" y="8" width="30" height="30"/>
                                         <state key="normal" title="Edit"/>
+                                        <connections>
+                                            <action selector="editButtonPressed:" destination="FHG-2u-bFn" eventType="touchUpInside" id="9Dv-nK-ZXb"/>
+                                        </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="PROMO20-08" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vPK-6o-keh">
                                         <rect key="frame" x="19" y="239.33333333333331" width="352" height="52"/>
@@ -582,6 +585,8 @@
                         <outlet property="CreditInfoView" destination="TWv-M9-6ct" id="ZnM-zZ-M2w"/>
                         <outlet property="PayButton" destination="MSf-2U-irD" id="Uht-di-n41"/>
                         <outlet property="PayPalInfoView" destination="gq4-gp-lg0" id="Cvb-QJ-07q"/>
+                        <outlet property="creditCardNumberLabel" destination="8VV-Td-mRm" id="SyE-zd-bHa"/>
+                        <outlet property="paypalAccountEmailLabel" destination="DpB-Ej-26r" id="yRL-HX-fmw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AUF-Zv-CWw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -44,6 +44,14 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         configureUI()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let secondaryVC = segue.destination as? SecondaryViewController {
+            secondaryVC.paymentType = CreditButton.isSelected ? .credit : .paypal
+            secondaryVC.payPalAccountEmail = PaypalUserNameTextField.text!
+            secondaryVC.creditCardNumber = cardNumberTextInput.text!
+        }
+    }
+    
     func isPaypalFormValid(textField: UITextField) -> Bool {
         var result = true
         switch textField {
@@ -112,20 +120,25 @@ class MainViewController: UIViewController, UITextFieldDelegate {
             default:
                 print("default")
         }
+        print("result as of now is: \(result)")
         return result
     }
     
     @IBAction func ProceedBtnPressed(_ sender: UIButton) {
-        var result = false
+        var result = true
         if CreditButton.isSelected {
             let arrayOfCreditTextFields = [cardNumberTextInput, datePickerTextField, CVVTextField, cardholderNameTextField]
             for textField in arrayOfCreditTextFields {
-                result = isCreditFormFieldValid(textField: textField!)
+                if !isCreditFormFieldValid(textField: textField!) {
+                    result = false
+                }
             }
         } else {
             let arrayOfPaypalTextFields = [PaypalUserNameTextField, PaypalPasswordTextField]
             for textField in arrayOfPaypalTextFields {
-                result = isPaypalFormValid(textField: textField!)
+                if !isPaypalFormValid(textField: textField!) {
+                    result = false
+                }
             }
         }
         if result == true {
@@ -154,9 +167,9 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         configureDatePicker()
         PayPalView.isHidden = true
         CreditButtonPressed(CreditButton)
-        //CreditButton.isEnabled = false
-        //PayPalButton.isEnabled = true
-        //CreditButton.alpha = 0.4
+//        CreditButton.isEnabled = false
+//        PayPalButton.isEnabled = true
+//        CreditButton.alpha = 0.4
         cardNumberTextInput.setLeftPaddingPoints(104)
     }
     
@@ -206,9 +219,9 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func didChangeCardHolderText(textField:UITextField) {
-        let result = isCreditFormFieldValid(textField: PaypalUserNameTextField)
+        let result = isCreditFormFieldValid(textField: cardholderNameTextField)
         if result {
-            PaypalUserNameTextField.layer.borderWidth = 0
+            cardholderNameTextField.layer.borderWidth = 0
         }
     }
     
@@ -248,6 +261,8 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func PayPalButtonPressed(_ sender: UIButton) {
+        // clear Paypal form
+        //configureUI()
         CreditView.isHidden = true
         PayPalView.isHidden = false
         PayPalButton.isSelected = true
@@ -259,6 +274,8 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func CreditButtonPressed(_ sender: UIButton) {
+        // clear credit form
+        //configureUI()
         CreditView.isHidden = false
         PayPalView.isHidden = true
         CreditButton.isSelected = true
@@ -315,7 +332,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
             let updatedString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
             let maxLength = 35
             result = updatedString.count <= maxLength
-        case cardholderNameTextField, CVVTextField:
+        case cardNumberTextInput, CVVTextField:
             let allowedCharacters = "+1234567890"
             let allowedCharacterSet = CharacterSet(charactersIn: allowedCharacters)
             let typedCharacterSet = CharacterSet(charactersIn: string)
