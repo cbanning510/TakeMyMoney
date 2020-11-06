@@ -56,18 +56,14 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         var result = true
         switch textField {
             case PaypalUserNameTextField:
-                print("PaypalUserNameTextField")
                 invalidPayPalEmailLebel.isHidden = true
-                print(isValid(YourEMailAddress: PaypalUserNameTextField.text!))
                 if !isValid(YourEMailAddress: PaypalUserNameTextField.text!) {
-                    print("not valid!!!")
                     PaypalUserNameTextField.layer.borderWidth = 2.0
                     PaypalUserNameTextField.layer.borderColor = UIColor.red.cgColor
                     invalidPayPalEmailLebel.isHidden = false
                     result = false
                 }
-            case PaypalPasswordTextField:
-                print("PaypalPasswordTextField")
+        case PaypalPasswordTextField:
                 invalidPaypalPasswordLabel.isHidden = true
                 if PaypalPasswordTextField.text == "" {
                     PaypalPasswordTextField.layer.borderWidth = 2.0
@@ -120,7 +116,6 @@ class MainViewController: UIViewController, UITextFieldDelegate {
             default:
                 print("default")
         }
-        print("result as of now is: \(result)")
         return result
     }
     
@@ -153,12 +148,14 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         invalidFullNameLabel.isHidden = true
         invalidPayPalEmailLebel.isHidden = true
         invalidPaypalPasswordLabel.isHidden = true
+        
         cardNumberTextInput.delegate = self
         CVVTextField.delegate = self
         cardholderNameTextField.delegate = self
         PaypalUserNameTextField.delegate = self
         PaypalPasswordTextField.delegate = self
-        self.cardNumberTextInput.addTarget(self, action: #selector(didChangeText(textField:)), for: .editingChanged)
+        
+        self.cardNumberTextInput.addTarget(self, action: #selector(didChangeCreditCardNumberText(textField:)), for: .editingChanged)
         self.CVVTextField.addTarget(self, action: #selector(didChangeCVVText(textField:)), for: .editingChanged)
         self.cardholderNameTextField.addTarget(self, action: #selector(didChangeCardHolderText(textField:)), for: .editingChanged)
         self.PaypalUserNameTextField.addTarget(self, action: #selector(didChangePayPalUserName(textField:)), for: .editingChanged)
@@ -167,9 +164,6 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         configureDatePicker()
         PayPalView.isHidden = true
         CreditButtonPressed(CreditButton)
-//        CreditButton.isEnabled = false
-//        PayPalButton.isEnabled = true
-//        CreditButton.alpha = 0.4
         cardNumberTextInput.setLeftPaddingPoints(104)
     }
     
@@ -207,7 +201,7 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
-    @objc func didChangeText(textField:UITextField) {
+    @objc func didChangeCreditCardNumberText(textField:UITextField) {
         textField.text = self.modifyCreditCardString(creditCardString: textField.text!)
     }
     
@@ -261,8 +255,6 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func PayPalButtonPressed(_ sender: UIButton) {
-        // clear Paypal form
-        //configureUI()
         CreditView.isHidden = true
         PayPalView.isHidden = false
         PayPalButton.isSelected = true
@@ -274,8 +266,6 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func CreditButtonPressed(_ sender: UIButton) {
-        // clear credit form
-        //configureUI()
         CreditView.isHidden = false
         PayPalView.isHidden = true
         CreditButton.isSelected = true
